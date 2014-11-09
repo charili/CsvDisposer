@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using WebserviceTest;
 
-namespace WebserviceTest
+namespace CsvDisposer
 {
     public class CsvReader : IDisposable
     {
@@ -52,6 +50,8 @@ namespace WebserviceTest
         {
             if(_streamReader != null)
                 _streamReader.Close();
+            if(_stream != null)
+                _stream.Close();
         }
         
     }
