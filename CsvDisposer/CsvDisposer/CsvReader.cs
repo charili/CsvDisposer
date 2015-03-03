@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using WebserviceTest;
@@ -14,7 +15,7 @@ namespace CsvDisposer
         private char _splitedCharacter { get; set; }
         private bool _disposed = false;
         private volatile bool _hasHeader = true;
-
+        private ObjectProperitesMapping _opMapping;
         public CsvReader(Stream stream, char splitedCharacter, bool hasHeader = true)
         {
             _stream = stream;
@@ -25,6 +26,17 @@ namespace CsvDisposer
             {
                 InitCsvHeader();
             }
+        }
+
+        public void SetObjectPropertyMapping<T>()
+        {
+            Type type = typeof(T);
+            var o = (T)Activator.CreateInstance(type);
+            var properties = type.GetProperties();
+            _opMapping = new ObjectProperitesMapping();
+            _opMapping.Obj = o;
+            _opMapping.PropertyInfos = properties;
+
         }
 
         ~CsvReader()
@@ -61,25 +73,57 @@ namespace CsvDisposer
 
         public T GetRowObject<T>()
         {
-            Type type = typeof (T);
-            var o = (T)Activator.CreateInstance(type);
+            //Type type = typeof(T);
+            //var o = (T)Activator.CreateInstance(type);
 
-            var properties = type.GetProperties();
+            //var properties = type.GetProperties();
             var currentLine = ReadLine();
             if (currentLine == null)
-                return o;
+                return default (T);
             var splitedLine = currentLine.Split(_splitedCharacter);
+            if (splitedLine.Length < _opMapping.PropertyInfos.Length)
+                return default(T);
             int i = 0;
             //var targetType = IsNullableType(propertyInfo.PropertyType) ? Nullable.GetUnderlyingType(propertyInfo.PropertyType) : propertyInfo.PropertyType;
 
-            foreach (var property in properties)
+            foreach (var property in _opMapping.PropertyInfos)
             {
-                
-                property.SetValue(o, Convert.ChangeType(splitedLine[i],property.PropertyType));
+
+                property.SetValue(_opMapping.Obj, Convert.ChangeType(splitedLine[i], property.PropertyType));
                 i++;
 
             }
-            return o;
+            //foreach (var property in properties)
+            //{
+
+            //    property.SetValue(o, Convert.ChangeType(splitedLine[i], property.PropertyType));
+            //    i++;
+
+            //}
+            return (T)_opMapping.Obj;
+        }
+
+        public IEnumerable<T> GetRows<T>()
+        {
+            Type type = typeof (T);
+            var o = (T) Activator.CreateInstance(type);
+            
+            var propertities = type.GetProperties();
+            string currentLine;
+            while ((currentLine = ReadLine()) != null)
+            {
+                var splitedLine = currentLine.Split(_splitedCharacter);
+                if(splitedLine.Length < propertities.Length)
+                    continue;
+                int i = 0;
+                foreach (var property in propertities)
+                {
+                    property.SetValue(o, Convert.ChangeType(splitedLine[i], property.PropertyType));
+                    i++;
+
+                }
+                yield return o;
+            }
         }
 
         public void Dispose()

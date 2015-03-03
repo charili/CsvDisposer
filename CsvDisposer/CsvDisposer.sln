@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvDisposer", "CsvDisposer\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{4DDC8B18-22D4-4FAB-B61B-F0122D019459}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvHelper35", "D:\download\CsvHelper-master\CsvHelper-master\src\CsvHelper35\CsvHelper35.csproj", "{82541DA4-EE4A-4078-BF05-63B48A8AA51E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4DDC8B18-22D4-4FAB-B61B-F0122D019459}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DDC8B18-22D4-4FAB-B61B-F0122D019459}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DDC8B18-22D4-4FAB-B61B-F0122D019459}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82541DA4-EE4A-4078-BF05-63B48A8AA51E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82541DA4-EE4A-4078-BF05-63B48A8AA51E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82541DA4-EE4A-4078-BF05-63B48A8AA51E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82541DA4-EE4A-4078-BF05-63B48A8AA51E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
