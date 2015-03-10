@@ -21,29 +21,29 @@ namespace Test
             //var csvReader = new CsvReader(stream, ',', false);
             TextReader tr = new StreamReader(stream);
 
-            using (var csvReader = new CsvReader(stream, ',', false))
+            //using (var csvReader = new CsvReader(stream, ',', false))
+            //{
+            //    csvReader.SetObjectPropertyMapping<Student>();
+            //    Stopwatch sw = new Stopwatch();
+            //    sw.Start();
+            //    for (int i = 0; i < 201132; i++)
+            //    {
+            //        var students = csvReader.GetRowObject<Student>();
+            //    }
+            //    sw.Stop();
+            //    Console.WriteLine(sw.ElapsedMilliseconds);
+                
+            //}
+            using (var csvHelper = new CsvHelper.CsvReader(tr, new CsvConfiguration { HasHeaderRecord = false }))
             {
-                csvReader.SetObjectPropertyMapping<Student>();
+
                 Stopwatch sw = new Stopwatch();
                 sw.Start();
-                for (int i = 0; i < 201132; i++)
+                while (csvHelper.Read())
                 {
-                    var students = csvReader.GetRowObject<Student>();
+                    var st = csvHelper.GetRecord<Student>();
+
                 }
-                sw.Stop();
-                Console.WriteLine(sw.ElapsedMilliseconds);
-                
-            }
-            //using (var csvHelper = new CsvHelper.CsvReader(tr,new CsvConfiguration{HasHeaderRecord = false}))
-            //{
-
-                //Stopwatch sw = new Stopwatch();
-                //sw.Start();
-                //while (csvHelper.Read())
-                //{
-                //    var st = csvHelper.GetRecord<Student>();
-
-                //}
 
                 //var students = csvReader.GetRows<Student>();
                 //foreach (var st in students)
@@ -61,11 +61,11 @@ namespace Test
                 //    var s = student;
                 //}
 
-                //sw.Stop();
-                //Console.WriteLine(sw.ElapsedMilliseconds);
+                sw.Stop();
+                Console.WriteLine(sw.ElapsedMilliseconds);
 
-                
-            //}
+
+            }
 
            
 
