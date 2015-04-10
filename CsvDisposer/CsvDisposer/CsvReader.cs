@@ -16,8 +16,18 @@ namespace CsvDisposer
         private bool _disposed = false;
         private volatile bool _hasHeader = true;
         private ObjectProperitesMapping _opMapping;
+
+
+        ~CsvReader()
+        {
+            Dispose(false);
+        }
+
         public CsvReader(Stream stream, char splitedCharacter, bool hasHeader = true)
         {
+            if(stream == null)
+                throw new ArgumentNullException("stream");
+           
             _stream = stream;
             _streamReader = new StreamReader(stream, Encoding.Default);
             _splitedCharacter = splitedCharacter;
@@ -39,10 +49,6 @@ namespace CsvDisposer
 
         }
 
-        ~CsvReader()
-        {
-            Dispose(false);
-        }
 
         public void InitCsvHeader()
         {

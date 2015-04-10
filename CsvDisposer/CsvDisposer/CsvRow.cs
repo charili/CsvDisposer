@@ -16,6 +16,11 @@ namespace WebserviceTest
 
         public CsvRow(CsvHeader header,string[] values)
         {
+            if(header == null)
+                throw new ArgumentNullException("header");
+            if(values == null)
+                throw new ArgumentNullException("values");
+
             _header = header;
             _cloumnValues = values;
             _columnLength = values.Length;

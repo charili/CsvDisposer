@@ -84,6 +84,8 @@ namespace CsvDisposer
 
         public async Task WriteRowsAsync<T>(List<T> records)
         {
+            if (records == null)
+                throw new ArgumentNullException("records");
             var type = typeof (T);
             var properties = type.GetProperties();
             StringBuilder builder = new StringBuilder();
@@ -154,6 +156,12 @@ namespace CsvDisposer
 
         public async  Task WriteCompressedFileAsync<T>(string compressFileName, string prefixFileName, List<T> records, int recordNum)
         {
+            if(string.IsNullOrEmpty(compressFileName))
+                throw new ArgumentNullException("compressFileName");
+            if(string.IsNullOrEmpty(prefixFileName))
+                throw new ArgumentNullException("prefixFileName");
+            if(records == null)
+                throw new ArgumentNullException("records");
             var content = GenMultiCsvFileString(records, recordNum);
             int count = 0;
             
